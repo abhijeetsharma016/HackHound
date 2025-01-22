@@ -20,23 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/yeonsungregular"
         android:layout_marginTop="32dp"
-        android:text="Explore Your Favorite Food"
+        android:fontFamily="sans-serif-black"
+        android:text="Scan Participent's id"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/notificationButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        app:srcCompat="@drawable/bell_icon" />
 
     <fragment
         android:id="@+id/fragmentContainerView2"

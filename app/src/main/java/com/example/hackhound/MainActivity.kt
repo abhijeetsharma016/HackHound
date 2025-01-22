@@ -1,10 +1,13 @@
 package com.example.hackhound
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.hackhound.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -17,10 +20,5 @@ class MainActivity : AppCompatActivity() {
         var NavController = findNavController(R.id.fragmentContainerView2)
         var bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setupWithNavController(NavController)
-        binding.notificationButton.setOnClickListener{
-            val bottomSheetDialog = notification_bottom_fragment()
-            bottomSheetDialog.show(supportFragmentManager, "test")
-        }
-
     }
 }
