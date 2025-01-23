@@ -8,6 +8,7 @@ espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.9.3"
+qr-scanner = "4.3.0"
 constraintlayout = "2.2.0"
 navigationRuntimeKtx = "2.8.5"
 
@@ -21,6 +22,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+
+qr-scanner = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "qr-scanner" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

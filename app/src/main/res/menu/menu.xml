@@ -3,7 +3,7 @@
 
     <item android:title="Scanner"
         android:id="@+id/scanner"
-        android:icon="@drawable/home_icon"/>
+        android:icon="@drawable/scanner"/>
     <item android:title="Current Lab"
         android:id="@+id/currentLab"
         android:icon="@drawable/cart_icon"/>

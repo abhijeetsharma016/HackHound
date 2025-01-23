@@ -17,7 +17,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 
@@ -68,12 +68,11 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     // AndroidX Espresso testing framework
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
     // Google Sign-In library
     implementation("com.google.android.gms:play-services-auth:20.5.0")
-
-
-    //for glide
+    // QR Scanner library
+    implementation(libs.qr.scanner)
+    // Glide library
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }
