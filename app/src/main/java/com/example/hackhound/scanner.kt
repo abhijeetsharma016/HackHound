@@ -40,6 +40,8 @@ class ScannerFragment : Fragment() { // Rename class to follow Kotlin convention
                 ScanOptions().apply {
                     setPrompt("Scan QR Code")
                     setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                    setOrientationLocked(true) // Ensures the camera opens in portrait mode
+
                 }
             )
         }
