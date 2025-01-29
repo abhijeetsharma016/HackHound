@@ -6,6 +6,6 @@
         android:icon="@drawable/scanner"/>
     <item android:title="Current Lab"
         android:id="@+id/currentLab"
-        android:icon="@drawable/cart_icon"/>
+        android:icon="@drawable/computer_icon"/>
 
 </menu>
