@@ -1,15 +1,14 @@
 package com.example.hackhound.model
 
 data class UserModel(
-    val id: Int? = null,
+    var id: String? = null,  // Store Firebase-generated key
     val name: String? = null,
     val phone: String? = null,
     val time1: String? = null
 ) {
-    // Add a secondary constructor if needed
     constructor() : this(null, null, null, null)
 
-    // Add validation function
+    // Validation to ensure no empty values
     fun isValid(): Boolean {
         return !name.isNullOrBlank() &&
                 !phone.isNullOrBlank() &&
