@@ -63,6 +63,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     // Firebase Storage library
     implementation("com.google.firebase:firebase-storage:21.0.0")
+    implementation(libs.androidx.cardview)
     // JUnit testing framework
     testImplementation("junit:junit:4.13.2")
     // AndroidX JUnit extension for Android tests
@@ -76,4 +77,9 @@ dependencies {
     // Glide library
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+
+    implementation ("androidx.cardview:cardview:1.0.0")
+
+
 }

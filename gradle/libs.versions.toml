@@ -13,6 +13,7 @@ constraintlayout = "2.2.0"
 navigationRuntimeKtx = "2.8.5"
 googleGmsGoogleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
+cardview = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,6 +28,7 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 
 qr-scanner = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "qr-scanner" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
