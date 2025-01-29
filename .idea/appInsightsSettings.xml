@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.hackhound" />
+                  <option name="mobileSdkAppId" value="1:673773115647:android:324d6d097da296070794ca" />
+                  <option name="projectId" value="hackhound-ffcd9" />
+                  <option name="projectNumber" value="673773115647" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

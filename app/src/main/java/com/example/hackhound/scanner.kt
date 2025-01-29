@@ -13,7 +13,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
-class ScannerFragment : Fragment() { // Rename class to follow Kotlin conventions
+class ScannerFragment : Fragment() {
     private lateinit var binding: FragmentScannerBinding
 
     // Register the QR code scanner launcher
