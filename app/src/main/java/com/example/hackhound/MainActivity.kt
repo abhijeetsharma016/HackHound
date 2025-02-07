@@ -1,3 +1,4 @@
+// MainActivity.kt
 package com.example.hackhound
 
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +10,16 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.hackhound.databinding.ActivityMainBinding
 import com.example.hackhound.model.UserModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: DatabaseReference
+    private var currentMaxId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -30,20 +35,47 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setupWithNavController(navController)
 
-        // Add dummy data to Firebase
-        addDummyData()
+        // Find the current maximum ID before adding dummy data
+        findCurrentMaxId {
+            addDummyData()
+        }
+    }
+
+    private fun findCurrentMaxId(onComplete: () -> Unit) {
+        database.orderByChild("id").limitToLast(1)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (childSnapshot in snapshot.children) {
+                            val user = childSnapshot.getValue(UserModel::class.java)
+                            user?.id?.toIntOrNull()?.let { maxId ->
+                                currentMaxId = maxId
+                            }
+                        }
+                    }
+                    onComplete()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@MainActivity, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                    onComplete()
+                }
+            })
     }
 
     private fun addUserToFirebase(user: UserModel) {
         if (user.isValid()) {
-            val newUserRef = database.push()  // Generate a unique key
-            user.id = newUserRef.key  // Assign the key to the user
-            newUserRef.setValue(user)
+            currentMaxId++
+            user.id = currentMaxId.toString()
+
+            // Use the numeric ID as the key in Firebase
+            database.child(user.id!!).setValue(user)
                 .addOnSuccessListener {
                     Toast.makeText(this, "User added successfully", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to add user: ${e.message}", Toast.LENGTH_SHORT).show()
+                    currentMaxId-- // Rollback ID increment if save fails
                 }
         }
     }

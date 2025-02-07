@@ -1,7 +1,8 @@
+// UserModel.kt
 package com.example.hackhound.model
 
 data class UserModel(
-    var id: String? = null,  // Store Firebase-generated key
+    var id: String? = null,
     val name: String? = null,
     val phone: String? = null,
     val time1: String? = null

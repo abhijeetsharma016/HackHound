@@ -23,22 +23,20 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
-// ScannerFragment.kt
 class ScannerFragment : Fragment() {
 
     private lateinit var adapter: UserAdapter
     private lateinit var database: FirebaseDatabase
     private lateinit var binding: FragmentScannerBinding
-    private val originalMenuItems = ArrayList<UserModel>() // Add this line
+    private val originalMenuItems = ArrayList<UserModel>()
+    private lateinit var userReference: DatabaseReference
 
     private val scannerLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
         if (result.contents == null) {
             Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
         } else {
-            binding.scannedValueTv.text = buildString {
-                append("Scanned Value: ")
-                append(result.contents)
-            }
+            // Search for user with scanned ID
+            findUserById(result.contents)
         }
     }
 
@@ -47,6 +45,10 @@ class ScannerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScannerBinding.inflate(inflater, container, false)
+
+        // Initialize Firebase
+        database = FirebaseDatabase.getInstance()
+        userReference = database.reference.child("users")
 
         // Initialize RecyclerView
         binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -69,13 +71,43 @@ class ScannerFragment : Fragment() {
         return binding.root
     }
 
-    private fun retrieveMenuItems() {
-        database = FirebaseDatabase.getInstance()
-        val userReference: DatabaseReference = database.reference.child("users") // Changed from menu to users
+    private fun findUserById(scannedId: String) {
+        userReference.orderByChild("id").equalTo(scannedId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val user = snapshot.children.first().getValue(UserModel::class.java)
+                        user?.let {
+                            // Display user information
+                            binding.scannedValueTv.text = buildString {
+                                append("Name: ${it.name}\n")
+                                append("Phone: ${it.phone}\n")
+                                append("Time: ${it.time1}")
+                            }
 
-        userReference.addValueEventListener(object : ValueEventListener { // Changed to ValueEventListener for real-time updates
+                            // Highlight the user in the RecyclerView
+                            val position = originalMenuItems.indexOfFirst { item -> item.id == scannedId }
+                            if (position != -1) {
+                                binding.menuRecyclerView.scrollToPosition(position)
+                                // You might want to highlight the item in the RecyclerView
+                                adapter.notifyItemChanged(position)
+                            }
+                        }
+                    } else {
+                        binding.scannedValueTv.text = "No user found with ID: $scannedId"
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun retrieveMenuItems() {
+        userReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                originalMenuItems.clear() // Clear existing items
+                originalMenuItems.clear()
                 for (userSnapshot in snapshot.children) {
                     val user = userSnapshot.getValue(UserModel::class.java)
                     user?.let {
@@ -117,9 +149,9 @@ class ScannerFragment : Fragment() {
 
     private fun filterMenuItems(query: String) {
         val filteredItems = originalMenuItems.filter {
-            it.name?.contains(query, ignoreCase = true) == true || // Changed from foodName to name
-                    it.phone?.contains(query, ignoreCase = true) == true || // Added phone search
-                    it.time1?.contains(query, ignoreCase = true) == true    // Added time search
+            it.name?.contains(query, ignoreCase = true) == true ||
+                    it.phone?.contains(query, ignoreCase = true) == true ||
+                    it.time1?.contains(query, ignoreCase = true) == true
         }
         setAdapter(ArrayList(filteredItems))
     }
