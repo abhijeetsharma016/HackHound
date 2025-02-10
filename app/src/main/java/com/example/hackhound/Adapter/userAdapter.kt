@@ -14,7 +14,6 @@ class UserAdapter(private val userList: ArrayList<UserModel>) :
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameText: TextView = itemView.findViewById(R.id.tvName)
         val phoneText: TextView = itemView.findViewById(R.id.tvPhone)
-        val timeText: TextView = itemView.findViewById(R.id.tvTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -27,7 +26,6 @@ class UserAdapter(private val userList: ArrayList<UserModel>) :
         val currentUser = userList[position]
         holder.nameText.text = currentUser.name
         holder.phoneText.text = currentUser.phone
-        holder.timeText.text = currentUser.time1
     }
 
     override fun getItemCount() = userList.size

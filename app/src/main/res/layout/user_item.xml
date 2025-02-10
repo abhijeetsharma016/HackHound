@@ -27,11 +27,5 @@
             android:layout_marginTop="4dp"
             android:text="Phone Placeholder" />
 
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Time Placeholder" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

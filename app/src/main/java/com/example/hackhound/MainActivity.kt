@@ -82,11 +82,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun addDummyData() {
         val dummyUsers = listOf(
-            UserModel(name = "John Doe", phone = "1234567890", time1 = "10:00 AM"),
-            UserModel(name = "Jane Smith", phone = "2345678901", time1 = "11:30 AM"),
-            UserModel(name = "Mike Johnson", phone = "3456789012", time1 = "2:15 PM"),
-            UserModel(name = "Sarah Wilson", phone = "4567890123", time1 = "4:45 PM"),
-            UserModel(name = "David Brown", phone = "5678901234", time1 = "6:00 PM")
+            UserModel(name = "John Doe", phone = "1234567890"),
+            UserModel(name = "Jane Smith", phone = "2345678901"),
+            UserModel(name = "Mike Johnson", phone = "3456789012"),
+            UserModel(name = "Sarah Wilson", phone = "4567890123"),
+            UserModel(name = "David Brown", phone = "5678901234")
         )
 
         // Add each dummy user to Firebase
