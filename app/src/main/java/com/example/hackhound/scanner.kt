@@ -1,6 +1,7 @@
 package com.example.hackhound
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,9 @@ import com.google.firebase.database.ValueEventListener
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ScannerFragment : Fragment() {
 
@@ -76,8 +80,24 @@ class ScannerFragment : Fragment() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val user = snapshot.children.first().getValue(UserModel::class.java)
+                        val userSnapshot = snapshot.children.first()
+                        val user = userSnapshot.getValue(UserModel::class.java)
                         user?.let {
+                            // Get current time in 12-hour format
+                            val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(
+                                Date()
+                            )
+                            it.time1 = currentTime
+
+                            // Update Firebase with new time1 value
+                            userSnapshot.ref.child("time1").setValue(it.time1)
+                                .addOnSuccessListener {
+                                    Log.d("Firebase", "Successfully updated time1 for user ${user.id}")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Firebase", "Failed to update time1: ${e.message}")
+                                }
+
                             // Display user information
                             binding.scannedValueTv.text = buildString {
                                 append("Name: ${it.name}\n")
@@ -89,7 +109,6 @@ class ScannerFragment : Fragment() {
                             val position = originalMenuItems.indexOfFirst { item -> item.id == scannedId }
                             if (position != -1) {
                                 binding.menuRecyclerView.scrollToPosition(position)
-                                // You might want to highlight the item in the RecyclerView
                                 adapter.notifyItemChanged(position)
                             }
                         }
@@ -99,7 +118,8 @@ class ScannerFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("Firebase", "Error finding user: ${error.message}")
+                    binding.scannedValueTv.text = "Error finding user: ${error.message}"
                 }
             })
     }

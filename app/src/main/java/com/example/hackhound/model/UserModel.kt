@@ -8,7 +8,7 @@ data class UserModel(
     var id: String? = null,
     val name: String? = null,
     val phone: String? = null,
-    val time1: String? = null,
+    var time1: String? = null,
     val time2: String? = null
 ) {
     // Default constructor required for Firebase
