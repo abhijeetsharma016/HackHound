@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.hackhound.databinding.ActivityMainBinding
+import com.example.hackhound.model.LabActivity
 import com.example.hackhound.model.UserModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
@@ -149,6 +150,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun addDummyData() {
         try {
+            val labs = listOf(
+                LabActivity(labNo = 1, currentMeal = 1)
+            )
+
+            Log.d("Firebase", "Adding ${labs.size} dummy lab(s)")
+            labs.forEach { lab -> addLabActivityToFirebase(lab) }
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error in addDummyData (LabActivity): ${e.message}")
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to add dummy lab data", Toast.LENGTH_LONG).show()
+        }
+
+
+        try {
             val dummyUsers = listOf(
                 UserModel(name = "John Doe", phone = "1234567890"),
                 UserModel(name = "Jane Smith", phone = "2345678901"),
@@ -165,4 +180,26 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Failed to add dummy data", Toast.LENGTH_LONG).show()
         }
     }
+
+    private fun addLabActivityToFirebase(labActivity: LabActivity) {
+        try {
+            val labActivityDatabase = FirebaseDatabase.getInstance().reference.child("labActivities")
+
+            labActivityDatabase.child(labActivity.labNo.toString()).setValue(labActivity)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "Successfully added LabActivity: ${labActivity.labNo}")
+                    Toast.makeText(this, "LabActivity added successfully", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firebase", "Failed to add LabActivity: ${e.message}")
+                    Toast.makeText(this, "Failed to add LabActivity: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } catch (e: Exception) {
+            Log.e("Firebase", "Error in addLabActivityToFirebase: ${e.message}")
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to process LabActivity", Toast.LENGTH_LONG).show()
+        }
+    }
+
 }
+
