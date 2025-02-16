@@ -1,5 +1,6 @@
 package com.example.hackhound
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -83,10 +84,16 @@ class ScannerFragment : Fragment() {
                         val userSnapshot = snapshot.children.first()
                         val user = userSnapshot.getValue(UserModel::class.java)
                         user?.let {
+                            if (!it.time1.isNullOrEmpty()) {
+                                // Show error if meal is already served
+                                Toast.makeText(requireContext(), "Meal already served!", Toast.LENGTH_SHORT).show()
+                                binding.scannedValueTv.text = "Error: Meal already served!"
+                                binding.scannedValueTv.setTextColor(Color.RED)
+                                return
+                            }
+
                             // Get current time in 12-hour format
-                            val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(
-                                Date()
-                            )
+                            val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
                             it.time1 = currentTime
 
                             // Update Firebase with new time1 value
@@ -100,10 +107,11 @@ class ScannerFragment : Fragment() {
 
                             // Display user information
                             binding.scannedValueTv.text = buildString {
+                                append("ID: ${it.id}\n")
                                 append("Name: ${it.name}\n")
-                                append("Phone: ${it.phone}\n")
                                 append("Time: ${it.time1}")
                             }
+                            binding.scannedValueTv.setTextColor(Color.BLACK)
 
                             // Highlight the user in the RecyclerView
                             val position = originalMenuItems.indexOfFirst { item -> item.id == scannedId }
@@ -123,6 +131,7 @@ class ScannerFragment : Fragment() {
                 }
             })
     }
+
 
     private fun retrieveMenuItems() {
         userReference.addValueEventListener(object : ValueEventListener {
