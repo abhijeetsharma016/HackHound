@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     private fun addDummyData() {
         try {
             val labs = listOf(
-                LabActivity(labNo = 1, currentMeal = 1)
+                LabActivity(labNo = 1, currentMeal = 2)
             )
 
             Log.d("Firebase", "Adding ${labs.size} dummy lab(s)")

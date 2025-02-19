@@ -9,13 +9,14 @@ data class UserModel(
     val name: String? = null,
     val phone: String? = null,
     var time1: String? = null,
-    val time2: String? = null
+    var time2: String? = null,
+    var time3: String? = null
 ) {
     // Default constructor required for Firebase
-    constructor() : this(null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null)
 
     // Constructor for creating user with just name and phone
-    constructor(name: String?, phone: String?) : this(null, name, phone, null, null)
+    constructor(name: String?, phone: String?) : this(null, name, phone, null, null, null)
 
     // Validation to ensure no empty values
     fun isValid(): Boolean {
@@ -23,6 +24,6 @@ data class UserModel(
     }
 
     override fun toString(): String {
-        return "UserModel(id=$id, name=$name, phone=$phone, time1=$time1, time2=$time2)"
+        return "UserModel(id=$id, name=$name, phone=$phone, time1=$time1, time2=$time2, time3=$time3)"
     }
 }
