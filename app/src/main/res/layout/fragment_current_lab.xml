@@ -6,6 +6,23 @@
     android:background="@color/white"
     tools:context=".CurrentLab">
 
+    <!-- Add this TextView below the existing textView25 -->
+    <TextView
+        android:id="@+id/currentLabTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="4dp"
+        android:text="Current Lab:"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/yeonsungregular"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
