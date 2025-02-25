@@ -98,12 +98,17 @@ class ScannerFragment : Fragment() {
                         currentMealTextView.text = "Current Meal: $currentMealNumber"
 
                         // Set color based on meal number for better visibility
-                        when (currentMealNumber) {
-                            1 -> currentMealTextView.setTextColor(Color.parseColor("#4CAF50")) // Green
-                            2 -> currentMealTextView.setTextColor(Color.parseColor("#FF9800")) // Orange
-                            3 -> currentMealTextView.setTextColor(Color.parseColor("#2196F3")) // Blue
-                            else -> currentMealTextView.setTextColor(Color.BLACK)
+                        val mealColor = when (currentMealNumber) {
+                            1 -> "#4CAF50" // Green
+                            2 -> "#FF9800" // Orange
+                            3 -> "#2196F3" // Blue
+                            4 -> "#E91E63" // Pink
+                            5 -> "#9C27B0" // Purple
+                            6 -> "#795548" // Brown
+                            7 -> "#607D8B" // Blue Grey
+                            else -> "#000000" // Black for unknown
                         }
+                        currentMealTextView.setTextColor(Color.parseColor(mealColor))
                     }
                 } else {
                     // Create default LabActivity if not exists
@@ -134,19 +139,18 @@ class ScannerFragment : Fragment() {
                         val user = userSnapshot.getValue(UserModel::class.java)
                         user?.let {
                             // Determine which time field to update based on currentMealNumber
-                            val timeField = when (currentMealNumber) {
-                                1 -> "time1"
-                                2 -> "time2"
-                                3 -> "time3"
-                                else -> "time1" // Default fallback
-                            }
+                            val timeField = "time$currentMealNumber"
 
                             // Check if meal is already served for this time period
                             val existingTime = when (currentMealNumber) {
                                 1 -> it.time1
                                 2 -> it.time2
                                 3 -> it.time3
-                                else -> it.time1
+                                4 -> it.time4
+                                5 -> it.time5
+                                6 -> it.time6
+                                7 -> it.time7
+                                else -> null // Should not happen
                             }
 
                             if (!existingTime.isNullOrEmpty()) {
@@ -165,6 +169,10 @@ class ScannerFragment : Fragment() {
                                 1 -> it.time1 = currentTime
                                 2 -> it.time2 = currentTime
                                 3 -> it.time3 = currentTime
+                                4 -> it.time4 = currentTime
+                                5 -> it.time5 = currentTime
+                                6 -> it.time6 = currentTime
+                                7 -> it.time7 = currentTime
                             }
 
                             // Update Firebase with new time value
@@ -255,7 +263,11 @@ class ScannerFragment : Fragment() {
                     it.id?.contains(query, ignoreCase = true) == true ||
                     it.time1?.contains(query, ignoreCase = true) == true ||
                     it.time2?.contains(query, ignoreCase = true) == true ||
-                    it.time3?.contains(query, ignoreCase = true) == true
+                    it.time3?.contains(query, ignoreCase = true) == true ||
+                    it.time4?.contains(query, ignoreCase = true) == true ||
+                    it.time5?.contains(query, ignoreCase = true) == true ||
+                    it.time6?.contains(query, ignoreCase = true) == true ||
+                    it.time7?.contains(query, ignoreCase = true) == true
         }
         setAdapter(ArrayList(filteredItems))
     }
