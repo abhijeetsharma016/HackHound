@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             // Find the current maximum ID before adding dummy data
             findCurrentMaxId {
-                addDummyData()
+                //addDummyData()
             }
         } catch (e: Exception) {
             Log.e("Firebase", "Error in onCreate: ${e.message}")
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addDummyData() {
+    /*private fun addDummyData() {
         try {
             val labs = listOf(
                 LabActivity(labNo = 1, currentMeal = 2)
@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
             Toast.makeText(this, "Failed to add dummy data", Toast.LENGTH_LONG).show()
         }
-    }
+    }*/
 
     private fun addLabActivityToFirebase(labActivity: LabActivity) {
         try {

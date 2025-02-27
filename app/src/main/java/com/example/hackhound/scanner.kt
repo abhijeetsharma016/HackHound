@@ -156,7 +156,7 @@ class ScannerFragment : Fragment() {
                             if (!existingTime.isNullOrEmpty()) {
                                 // Show error if meal is already served
                                 Toast.makeText(requireContext(), "Meal $currentMealNumber already served!", Toast.LENGTH_SHORT).show()
-                                binding.scannedValueTv.text = "Error: Meal $currentMealNumber already served!"
+                                binding.scannedValueTv.text = " ID: ${it.id} \n Name: ${it.name} \n Error: Meal $currentMealNumber already served!"
                                 binding.scannedValueTv.setTextColor(Color.RED)
                                 return
                             }
